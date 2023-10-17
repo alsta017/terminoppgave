@@ -1,37 +1,32 @@
-let headerEl = document.getElementById("header");
+let usernameEl = document.getElementById("usernameid");
+let passwordEl = document.getElementById("passwordid");
+let loginwindowel = document.getElementById("loginwindow");
+let loginresult = document.createElement("p");
 
-if (localStorage.getItem("logged_in") === null) {
-    localStorage.setItem("logged_in", "false");
+loginresult.setAttribute("id", "loginresult");
+
+function submitlogin() {
+    if (usernameEl.value === "badositt") {
+        if (passwordEl.value === "123") {
+            loginresult.textContent = "Logger inn...";
+            localStorage.setItem("logged_in", "true");
+            localStorage.setItem("account", usernameEl.value)
+            window.location.replace("index.html");
+        } else {
+            loginresult.textContent = "Feil passord";
+        };
+    } else {
+        loginresult.textContent = "Feil brukernavn eller passord";
+    };
+    loginwindowel.appendChild(loginresult);
 };
-if (localStorage.getItem("logged_in") === "false") {
-    let indexloginbutton = document.createElement("button");
-    indexloginbutton.setAttribute("id", "indexloginbutton");
-    indexloginbutton.setAttribute("onclick", "login()");
-    indexloginbutton.textContent = "Login";
-    headerEl.appendChild(indexloginbutton);
-} else if (localStorage.getItem("logged_in") === "true") {
-    let loggedintext = document.createElement("p");
-    let loggedinbutton = document.createElement("button");
-    let loggedindiv = document.createElement("div");
-    loggedintext.setAttribute("id", "loggedintext");
-    loggedinbutton.setAttribute("id", "loggedinbutton");
-    loggedindiv.setAttribute("id", "loggedindiv");
-    loggedintext.textContent = "Logged in as: " + localStorage.getItem("account");
-    loggedinbutton.textContent = "Log out";
-    loggedinbutton.setAttribute("onclick", "logout()");
-    loggedindiv.appendChild(loggedintext);
-    loggedindiv.appendChild(loggedinbutton);
-    headerEl.appendChild(loggedindiv);
-} else {
-    console.log("Could not get login status");
+
+function nybruker () {
+    window.location.replace("registrer.html")
 };
+
+if (window.location.pathname == 'index.html') {
+    
+}
+
 // Når man trykker på login-knappen
-function login () {
-    // Sender deg til login siden
-    window.location.replace("login.html");
-};
-function logout() {
-    localStorage.setItem("logged_in", "false");
-    localStorage.removeItem("account");
-    location.reload();
-};
